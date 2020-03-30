@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  active = 'top';
+  active = 'ABOUT';
+  options = ['ABOUT', 'EXPERIENCE', 'PROJECTS', 'SKILLS', 'EDUCATION'];
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

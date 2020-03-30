@@ -5,11 +5,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { AboutComponent } from './sidebar-content/about/about.component';
+import { ExperienceComponent } from './sidebar-content/experience/experience.component';
+import { ProjectsComponent } from './sidebar-content/projects/projects.component';
+import { SkillsComponent } from './sidebar-content/skills/skills.component';
+import { EducationComponent } from './sidebar-content/education/education.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent
+    SidebarComponent,
+    AboutComponent,
+    ExperienceComponent,
+    ProjectsComponent,
+    SkillsComponent,
+    EducationComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,18 @@
-#sidebar {
+.selected {
+  color: white;
+}
+
+.unselected {
+  color: black;
+}
+
+.sidebar {
   background: #2472a3;
-  height: 100vh
+  height: 100vh;
+  margin-left: -15px;
+  margin-right: 30px;
+}
+
+a {
+  color: black;
 }
