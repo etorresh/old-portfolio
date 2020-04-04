@@ -16,3 +16,16 @@
 a {
   color: black;
 }
+
+.myFace {
+  margin-top: 80%;
+  margin-bottom: 10px;
+}
+
+/*
+!important is needed in this case because Bootstrap also uses !important in many of the utility classes like border-*.
+ */
+.border {
+  border-width: 5px !important;
+  border-color: #4f8db4 !important;
+}
