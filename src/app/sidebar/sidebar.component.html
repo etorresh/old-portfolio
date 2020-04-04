@@ -1,8 +1,12 @@
-<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="text-center sidebar float-left" orientation="vertical">
-  <li class="myFace">
-    <img class="rounded-circle border" style="width: 60%" src="https://avatars0.githubusercontent.com/u/24781504?s=460&u=250206a879374fbbbe7cca2c36f4a5ddc2e641c3&v=4.jpg" alt="My face">
-  </li>
-  <li *ngFor="let option of options" ngbNavItem = "{{option}}">
-    <a ngbNavLink routerLinkActive="selected" [routerLink]="option | lowercase">{{option}}</a>
-  </li>
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="text-center float-left sidebar" orientation="vertical" style="overflow: hidden">
+  <div class="my-auto">
+    <li class="myFace">
+      <img class="rounded-circle border" style="width: 60%" src="https://avatars0.githubusercontent.com/u/24781504?s=460&u=250206a879374fbbbe7cca2c36f4a5ddc2e641c3&v=4.jpg" alt="My face">
+    </li>
+    <div>
+      <li *ngFor="let option of options" ngbNavItem = "{{option}}" class="overflow-hidden">
+        <a ngbNavLink routerLinkActive="selected" [routerLink]="option | lowercase">{{option}}</a>
+      </li>
+    </div>
+  </div>
 </ul>
