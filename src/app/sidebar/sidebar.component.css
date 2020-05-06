@@ -2,6 +2,7 @@
   color: white;
 }
 
+
 .sidebar {
   background: #2472a3;
   height: 100vh;
@@ -13,9 +14,7 @@ a {
   color: #8fb8d4;
 }
 
-.myFace {
-  margin-bottom: 10px;
-}
+
 
 /*
 !important is needed in this case because Bootstrap also uses !important in many of the utility classes like border-*.
