@@ -18,7 +18,7 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
       animate('0.5s')
     ]),
     transition('close => open', [
-      animate('0.3s')
+      animate('0.25s')
     ]),
   ]),
   ]
