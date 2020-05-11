@@ -1,10 +1,11 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-2" id="sidebar">
-      <app-sidebar></app-sidebar>
-    </div>
-    <div class="col" style="overflow: hidden">
-      <router-outlet></router-outlet>
-    </div>
+<div class="flex-wrap">
+  <div class="sidebar" [@openClose]="status ? 'open' : 'close'">
+    <app-sidebar></app-sidebar>
   </div>
+  <div>
+        <button type="button" class="btn shadow-none" (click)="toggleSidebar()" style="background-color: #2472a3">
+          <fa-icon [icon]="faAlignLeft"></fa-icon>
+        </button>
+  </div>
+  <router-outlet></router-outlet>
 </div>

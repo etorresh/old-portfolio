@@ -10,6 +10,8 @@ import { ExperienceComponent } from './sidebar-content/experience/experience.com
 import { ProjectsComponent } from './sidebar-content/projects/projects.component';
 import { SkillsComponent } from './sidebar-content/skills/skills.component';
 import { EducationComponent } from './sidebar-content/education/education.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,12 +21,14 @@ import { EducationComponent } from './sidebar-content/education/education.compon
     ExperienceComponent,
     ProjectsComponent,
     SkillsComponent,
-    EducationComponent
+    EducationComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FontAwesomeModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
