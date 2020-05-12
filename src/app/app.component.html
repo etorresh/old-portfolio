@@ -1,4 +1,4 @@
-<div class="flex-wrap">
+<div class="d-flex flex-wrap">
   <div class="sidebar" [@openClose]="status ? 'open' : 'close'">
     <app-sidebar></app-sidebar>
   </div>
@@ -7,5 +7,7 @@
           <fa-icon [icon]="faAlignLeft"></fa-icon>
         </button>
   </div>
-  <router-outlet></router-outlet>
+  <div class="flex-grow-1 text-center my-auto" style="margin-left: -40px">
+    <router-outlet></router-outlet>
+  </div>
 </div>

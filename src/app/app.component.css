@@ -3,17 +3,7 @@
   min-width: 288px;
 }
 
-/*.sidebarActive {*/
-/*  margin-left: -288px;*/
-/*}*/
-
 .btn {
   color: white;
   border-radius: 0px     10px      10px           0px;
-}
-
-.wrapper {
-  display: flex;
-  width: 100%;
-  align-items: stretch;
 }
