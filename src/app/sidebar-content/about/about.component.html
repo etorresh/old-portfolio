@@ -1,5 +1,4 @@
-<h1 [ngStyle]="{'margin-bottom': '0px', 'font-size': '4vw'}">I'm <span [@animateText]="state">Emilio Torres.</span></h1>
+<h1 [ngStyle]="{'margin-bottom': '0px', 'font-size': '4vw'}">I'm <span [@animateText]="theme.currentTheme()">Emilio Torres.</span></h1>
 <p style="margin-top: 1.5vw">A software developer</p>
 <p [ngStyle]="{'margin-top': '-3vw', 'margin-bottom': '0px'}">in Calgary, AB.</p>
-<p style="margin-top: 1.5vw">Let's <span [@animateText]="state">work together!</span></p>
-
+<p style="margin-top: 1.5vw">Let's <span [@animateText]="theme.currentTheme()">work together!</span></p>

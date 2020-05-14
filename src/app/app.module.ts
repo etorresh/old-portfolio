@@ -12,6 +12,7 @@ import { SkillsComponent } from './sidebar-content/skills/skills.component';
 import { EducationComponent } from './sidebar-content/education/education.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ThemeService} from './sidebar-content/theme.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FontAwesomeModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [ThemeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

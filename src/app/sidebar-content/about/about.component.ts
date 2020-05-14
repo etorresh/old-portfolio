@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {trigger, state, style, animate, transition} from '@angular/animations';
+import {ThemeService} from '../theme.service';
 
 @Component({
   selector: 'app-about',
@@ -40,25 +41,6 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
     ]),
   ]
 })
-export class AboutComponent implements AfterViewInit {
-  colors = ['gray', 'pink', 'orange', 'green', 'purple']
-  state = 'gray';
-  i = 2;
-  doAsyncTask() {
-      setTimeout(() => {
-        if (this.i === 5) {
-          this.i = 0;
-        }
-        this.state = this.colors[this.i];
-        this.i++;
-        this.doAsyncTask();
-      }, 10000);
-  }
-  startAnimation() {
-    this.state = 'pink';
-    this.doAsyncTask();
-  }
-  ngAfterViewInit() {
-      setTimeout(() => this.startAnimation(), 1500);
-    }
+export class AboutComponent {
+  constructor(public theme: ThemeService) { }
   }
