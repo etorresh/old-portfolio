@@ -1,18 +1,14 @@
-import {BehaviorSubject, Observable} from 'rxjs';
-
 export class ThemeService {
   private started = false;
-  private colors = ['gray', 'pink', 'orange', 'green', 'purple'];
+  private colors = ['pink', 'orange', 'green', 'purple'];
   private colorsIndex = 0;
-  private color = this.colors[this.colorsIndex];
+  private color = 'gray';
 
   private startAnimation() {
     if (!this.started) {
       this.started = true;
       setTimeout(() => {
-        this.colorsIndex++;
-        this.color = this.colors[this.colorsIndex];
-        console.log(this.color);
+        this.color = 'pink';
         this.changeColors();
       }, 1500);
     }
@@ -21,13 +17,12 @@ export class ThemeService {
   private changeColors() {
     setTimeout(() => {
       this.colorsIndex++;
-      if (this.colorsIndex === 5) {
+      if (this.colorsIndex === this.colors.length) {
         this.colorsIndex = 0;
       }
       this.color = this.colors[this.colorsIndex];
-      console.log(this.color);
       this.changeColors();
-    }, 10000);
+    }, 6000);
   }
 
   public currentTheme() {

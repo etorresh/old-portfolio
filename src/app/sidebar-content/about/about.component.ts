@@ -35,7 +35,7 @@ import {ThemeService} from '../theme.service';
       transition('green => purple', [
         animate('1s')
       ]),
-      transition('purple => gray', [
+      transition('purple => pink', [
         animate('1s')
       ]),
     ]),
@@ -43,4 +43,4 @@ import {ThemeService} from '../theme.service';
 })
 export class AboutComponent {
   constructor(public theme: ThemeService) { }
-  }
+}
