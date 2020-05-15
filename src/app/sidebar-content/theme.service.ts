@@ -5,13 +5,11 @@ export class ThemeService {
   private color = 'gray';
 
   private startAnimation() {
-    if (!this.started) {
-      this.started = true;
-      setTimeout(() => {
-        this.color = 'pink';
-        this.changeColors();
-      }, 1500);
-    }
+    this.started = true;
+    setTimeout(() => {
+      this.color = 'pink';
+      this.changeColors();
+    }, 1500);
   }
 
   private changeColors() {

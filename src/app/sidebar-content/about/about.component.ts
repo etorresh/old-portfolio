@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {trigger, state, style, animate, transition} from '@angular/animations';
 import {ThemeService} from '../theme.service';
 
@@ -43,4 +43,7 @@ import {ThemeService} from '../theme.service';
 })
 export class AboutComponent {
   constructor(public theme: ThemeService) { }
+  newWindow(url) {
+    window.open(url, '_blank');
+  }
 }
