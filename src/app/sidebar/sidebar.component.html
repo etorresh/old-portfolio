@@ -5,7 +5,7 @@
     </li>
     <div>
       <li *ngFor="let option of options" ngbNavItem = "{{option}}" class="overflow-hidden">
-        <a ngbNavLink routerLinkActive="selected" [routerLink]="option | lowercase">{{option}}</a>
+        <a ngbNavLink routerLinkActive="selected" [routerLink]="option | lowercase"><b>{{option}}</b></a>
       </li>
     </div>
   </div>
