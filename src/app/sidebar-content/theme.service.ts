@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+@Injectable()
 export class ThemeService {
   private started = false;
   private colors = ['pink', 'orange', 'green', 'purple'];
