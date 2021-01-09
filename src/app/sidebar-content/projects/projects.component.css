@@ -1,6 +1,10 @@
-.project-logo {
+.galaxer-logo {
   border-radius: 20px;
   width: 135px;
+}
+
+.markov-logo {
+  height: 135px;
 }
 
 .project-description {
