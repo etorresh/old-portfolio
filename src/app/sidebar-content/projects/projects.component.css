@@ -1,14 +1,18 @@
-.galaxer-logo {
-  border-radius: 20px;
-  width: 30%;
-  max-height: 151px;
-  max-width: 151px;
-  min-width: 120px;
-}
-
-.project-description {
+.card-body {
   color: #353e3d;
-  font-size: 25px;
+  font-size: 1rem;
+  text-align: center;
 }
 
+.card-title {
+  font-size: 2rem;
+  text-align: center;
+}
 
+.card-body {
+  padding: 40px;
+}
+
+.card {
+  width: 100%;
+}
