@@ -5,10 +5,11 @@
 
 .btn {
   color: white;
-  border-radius: 0px     10px      10px           0px;
+  border-radius: 0     10px      10px           0;
 }
 
 .content {
   margin-left: -40px;
   font-color: #353a40;
 }
+

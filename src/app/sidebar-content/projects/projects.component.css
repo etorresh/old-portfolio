@@ -1,14 +1,14 @@
 .galaxer-logo {
   border-radius: 20px;
-  width: 135px;
-}
-
-.markov-logo {
-  height: 135px;
+  width: 30%;
+  max-height: 151px;
+  max-width: 151px;
+  min-width: 120px;
 }
 
 .project-description {
   color: #353e3d;
   font-size: 25px;
 }
+
 
