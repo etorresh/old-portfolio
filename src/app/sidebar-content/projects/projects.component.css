@@ -10,9 +10,22 @@
 }
 
 .card-body {
-  padding: 40px;
+  padding: 20px 40px 40px;
 }
 
 .card {
   width: 100%;
+}
+
+.square-logo {
+  width: 58px;
+  height: 58px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.horizontal-logo {
+  width: 188px;
+  height: 66px;
+  margin-bottom: 15px;
 }
