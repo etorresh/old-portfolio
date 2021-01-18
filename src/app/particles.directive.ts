@@ -2,6 +2,7 @@
 // https://github.com/audrenbdb/angular-particlesjs
 
 import {Directive, ElementRef, Input, OnDestroy, HostListener, OnInit, OnChanges} from '@angular/core';
+import {ParticlesConfigService} from './particles-config.service';
 
 /*
   Variables to be used outside of directive scope
@@ -36,12 +37,12 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
   @Input() speed = 6;
   @Input() linkWidth = 0;
   @Input() linkDistance = 140;
-  @Input() size = 80;
-  @Input() repulseDistance = 140;
+  @Input() size = 100;
+  // TO DO: distance relative to screen size
+  @Input() repulseDistance = 500;
   @Input() particleHex = '#FFF';
   @Input() linkHex = '#FFF';
   @Input() densityArea = 800;
-
 
   particlesNumber: number;
   particlesList: Particle[] = [];
@@ -54,6 +55,7 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
 
   constructor(
     public el: ElementRef,
+    private particles: ParticlesConfigService
   ) {
     canvas = this.el.nativeElement;
     canvas.style.height = '100%';
@@ -95,7 +97,6 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
     this.initVariables();
     this.resetParticles();
   }
-
   setMousePos(x, y) {
     mouse.x = x;
     mouse.y = y;
@@ -118,7 +119,6 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
   animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.updateParticles();
-    this.updateLinks();
     this.animationFrame = requestAnimationFrame(this.animate.bind(this));
   }
 
@@ -128,45 +128,19 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
     ctx.beginPath();
     for (const p of this.particlesList)
     {
-      p.repulse();
-      p.update(ctx, true);
-    }
-    ctx.fill();
-  }
-
-  updateLinks() {
-    let i: number;
-    let link: Link;
-    let alphaIdx = 0;
-
-    for (const p1 of this.particlesList) {
-      p1.explored = true;
-      const count = quadTree.query(p1, 0, this.candidates);
-      for (i = 0; i < count; i++) {
-        const p2 = this.candidates[i];
-        if (!p2.explored) {
-          link = this.linkPool.length ? this.linkPool.pop() : new Link();
-          link.init(p1, p2);
-          this.links[link.batchId].push(link);
-        }
+      if (this.particles.repulse) {
+        p.repulse();
       }
+      p.update(ctx, this.particles.speed);
     }
-
-    ctx.lineWidth = this.linkWidth;
-    ctx.strokeStyle = this.linkHex;
-    for (const l of this.links) {
-      ctx.globalAlpha = this.linkBatchAlphas[alphaIdx++];
-      ctx.beginPath();
-      while (l.length) { this.linkPool.push(l.pop().addPath(ctx)); }
-      ctx.stroke();
-    }
-    ctx.globalAlpha = 1;
+    console.log(this.particlesList.length);
+    ctx.fill();
   }
 
   resetParticles() {
     this.particlesList = [];
     for (let i = 0; i < this.particlesNumber; i++) {
-      this.particlesList.push(new Particle(canvas, particleSize));
+      this.particlesList.push(new Particle(canvas, particleSize, this.particles));
     }
     quadTree = new QuadTree();
     for (const p of this.particlesList) { p.reset(canvas); }
@@ -174,6 +148,7 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
 
   scaleDensity() {
     const area = canvas.width * canvas.height / 1000;
+    // tslint:disable-next-line:no-bitwise
     this.particlesNumber = (area * this.number / this.densityArea) | 0;
   }
 
@@ -195,21 +170,12 @@ class Link {
   alpha: number;
   batchId: number;
   constructor() {  }
-  init(p1: Particle, p2: Particle) {
-    this.p1 = p1;
-    this.p2 = p2;
-    const dx = p1.x - p2.x;
-    const dy = p1.y - p2.y;
-    this.alpha = 1 - (dx * dx + dy * dy) / linkDistance2;
-    this.batchId = this.alpha * linkBatches | 0;
-    this.batchId = this.batchId >= linkBatches ? linkBatches : this.batchId;
-  }
+  // tslint:disable-next-line:no-shadowed-variable
   addPath(ctx) {
     ctx.moveTo(this.p1.x, this.p1.y);
     ctx.lineTo(this.p2.x, this.p2.y);
     return this;
   }
-
 }
 
 
@@ -222,11 +188,13 @@ class Particle {
   vy: number;
   quad: QuadTree;
   explored: boolean;
+  // tslint:disable-next-line:no-shadowed-variable
   constructor(canvas, r) {
     this.r = r;
     this.speedScale = particleSpeed / 2;
     this.reset(canvas, r);
   }
+  // tslint:disable-next-line:no-shadowed-variable
   reset(canvas, r = this.r) {
     const W = canvas.width - r * 2;
     const H = canvas.height - r * 2;
@@ -238,6 +206,7 @@ class Particle {
     this.explored = false;
 
   }
+  // tslint:disable-next-line:no-shadowed-variable
   addPath(ctx) {
     ctx.moveTo(this.x + this.r,  this.y);
     ctx.arc(this.x,  this.y, this.r, 0, TAU);
@@ -256,13 +225,14 @@ class Particle {
     return  ((xd - w) ** 2 + (yd - h) ** 2) <= linkDistance2;
 
   }
-  update(ctx) {
+  // tslint:disable-next-line:no-shadowed-variable
+  update(ctx, speed) {
     this.explored = false;
     const r = this.r;
     let W;
     let H;
-    this.x += this.vx * this.speedScale;
-    this.y += this.vy * this.speedScale;
+    this.x += this.vx * speed;
+    this.y += this.vy * speed;
     W = ctx.canvas.width + r;
     H = ctx.canvas.height + r;
     if (this.x > W) {
@@ -283,8 +253,9 @@ class Particle {
     quadTree.insert(this);
   }
   repulse() {
-    const dx = this.x - mouse.x;
-    const dy = this.y - mouse.y;
+    // TO DO: position relative to screen size
+    const dx = this.x - 960;
+    const dy = this.y - 540;
 
     const dist = (dx * dx + dy * dy) ** 0.5;
     let rf = ((1 - (dist / repulseDistance) ** 2)  * 100);
