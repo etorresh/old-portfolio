@@ -11,5 +11,10 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  mouseEnter(cardNumber) {
+    console.log(cardNumber);
+  }
+  mouseLeave() {
+   console.log('mouseLeave');
+  }
 }

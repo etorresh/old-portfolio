@@ -20,7 +20,9 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/assets"
+              "src/assets",
+              "node_modules/bootstrap-4.5.3-dist"
+
             ],
             "styles": [
               "node_modules/bootstrap-4.5.3-dist/css/bootstrap.min.css",
@@ -85,7 +87,8 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "node_modules/bootstrap-4.5.3-dist"
             ],
             "styles": [
               "src/styles.css"
