@@ -21,7 +21,6 @@ let linkDistance2: number;
 let repulseDistance: number;
 let particleSpeed: number;
 let particleSize: number;
-let bounce: boolean;
 let quadTree: QuadTree;
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
@@ -35,13 +34,12 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
 
   @Input() number = 80;
   @Input() speed = 6;
-  @Input() linkWidth = .5;
+  @Input() linkWidth = 0;
   @Input() linkDistance = 140;
-  @Input() size = 3;
+  @Input() size = 80;
   @Input() repulseDistance = 140;
   @Input() particleHex = '#FFF';
   @Input() linkHex = '#FFF';
-  @Input() bounce = true;
   @Input() densityArea = 800;
 
 
@@ -51,7 +49,6 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
   linkBatchAlphas: number[] = [];
   linkPool: Link[] = [];
   candidates: Particle[] = [];
-  boundary: Bounds;
 
   animationFrame;
 
@@ -114,7 +111,6 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
     repulseDistance = this.repulseDistance;
     particleSpeed = this.speed;
     particleSize = this.size;
-    bounce = this.bounce;
     if (this.densityArea) { this.scaleDensity(); }
   }
 
@@ -130,7 +126,11 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
     quadTree.close();
     ctx.fillStyle = this.particleHex;
     ctx.beginPath();
-    for (const p of this.particlesList) { p.update(ctx, true); }
+    for (const p of this.particlesList)
+    {
+      p.repulse();
+      p.update(ctx, true);
+    }
     ctx.fill();
   }
 
@@ -256,44 +256,31 @@ class Particle {
     return  ((xd - w) ** 2 + (yd - h) ** 2) <= linkDistance2;
 
   }
-  update(ctx, repulse = true) {
+  update(ctx) {
     this.explored = false;
     const r = this.r;
-    let W, H;
+    let W;
+    let H;
     this.x += this.vx * this.speedScale;
     this.y += this.vy * this.speedScale;
-
-    if (bounce) {
-      W = ctx.canvas.width - r;
-      H = ctx.canvas.height - r;
-      if (this.x > W || this.x < 0) {
-        this.vx = -this.vx;
-      }
-      if (this.y > H || this.y < 0) {
-        this.vy = -this.vy;
-      }
-    } else {
-      W = ctx.canvas.width + r;
-      H = ctx.canvas.height + r;
-      if (this.x > W) {
-        this.x = 0;
-        this.y = Math.random() * (H - r);
-      } else if (this.x < -r) {
-        this.x = W - r;
-        this.y = Math.random() * (H - r);
-      }
-      if (this.y > H) {
-        this.y = 0;
-        this.x = Math.random() * (W - r);
-      } else if (this.y < -r) {
-        this.y = H - r;
-        this.x = Math.random() * (W - r);
-      }
+    W = ctx.canvas.width + r;
+    H = ctx.canvas.height + r;
+    if (this.x > W) {
+      this.x = 0;
+      this.y = Math.random() * (H - r);
+    } else if (this.x < -r) {
+      this.x = W - r;
+      this.y = Math.random() * (H - r);
     }
-    repulse && mouse.x && this.repulse();
+    if (this.y > H) {
+      this.y = 0;
+      this.x = Math.random() * (W - r);
+    } else if (this.y < -r) {
+      this.y = H - r;
+      this.x = Math.random() * (W - r);
+    }
     this.addPath(ctx);
     quadTree.insert(this);
-    this.quad && (this.quad.drawn = false);
   }
   repulse() {
     const dx = this.x - mouse.x;
@@ -305,14 +292,8 @@ class Particle {
 
     const posX = this.x + dx * rf;
     const posY = this.y + dy * rf;
-
-    if (bounce) {
-      if (posX - particleSize > 0 && posX + particleSize < canvas.width) { this.x = posX; }
-      if (posY - particleSize > 0 && posY + particleSize < canvas.height) { this.y = posY; }
-    } else {
-      this.x = posX;
-      this.y = posY;
-    }
+    this.x = posX;
+    this.y = posY;
   }
 }
 
