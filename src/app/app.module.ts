@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ThemeService } from './sidebar-content/theme.service';
 import { ParticlesTestComponent } from './particles-playground/particles-test/particles-test.component';
 import {ParticlesDirective} from './particles.directive';
-import {ParticlesConfigService} from './particles-config.service';
+import {ParticlesService} from './particles.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import {ParticlesConfigService} from './particles-config.service';
     FontAwesomeModule,
     BrowserAnimationsModule,
   ],
-  providers: [ThemeService, ParticlesConfigService],
+  providers: [ThemeService, ParticlesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

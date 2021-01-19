@@ -1,4 +1,16 @@
-<h1 [ngStyle]="{'margin-bottom': '0px', 'font-size': '4vw'}">I'm <a routerLink="" (click)="newWindow('https://github.com/etorresh')"><span [@animateText]="theme.currentTheme()" style="text-decoration: underline">Emilio Torres.</span></a></h1>
-<p style="margin-top: 1.5vw">A software developer</p>
-<p [ngStyle]="{'margin-top': '-3vw', 'margin-bottom': '0px'}">in Calgary, AB.</p>
-<p style="margin-top: 1.5vw">Let's <a href = "mailto: emiliotorreshinojosa@gmail.com"><span [@animateText]="theme.currentTheme()" style="text-decoration: underline">work together!</span></a></p>
+<div class="container d-flex w-100 h-100 align-items-center">
+  <div class="row text-center mx-auto">
+    <div class="col-12">
+      <h1 [ngStyle]="{'margin-bottom': '0px', 'font-size': '4vw'}">I'm <a routerLink="" (click)="newWindow('https://github.com/etorresh')"><span [@animateText]="theme.currentTheme()" style="text-decoration: underline">Emilio Torres.</span></a></h1>
+    </div>
+    <div class="col-12">
+      <p style="margin-top: 1.5vw">A software developer</p>
+    </div>
+    <div class="col-12">
+      <p [ngStyle]="{'margin-top': '-3vw', 'margin-bottom': '0px'}">in Calgary, AB.</p>
+    </div>
+    <div class="col-12">
+      <p style="margin-top: 1.5vw">Let's <a href = "mailto: emiliotorreshinojosa@gmail.com"><span [@animateText]="theme.currentTheme()" style="text-decoration: underline">work together!</span></a></p>
+    </div>
+  </div>
+</div>

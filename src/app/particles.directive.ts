@@ -1,8 +1,8 @@
 // Customized branch of:
 // https://github.com/audrenbdb/angular-particlesjs
 
-import {Directive, ElementRef, Input, OnDestroy, HostListener, OnInit, OnChanges} from '@angular/core';
-import {ParticlesConfigService} from './particles-config.service';
+import {Directive, ElementRef, OnDestroy, HostListener, OnInit} from '@angular/core';
+import {ParticlesService} from './particles.service';
 
 /*
   Variables to be used outside of directive scope
@@ -10,15 +10,11 @@ import {ParticlesConfigService} from './particles-config.service';
 */
 const TAU: number = Math.PI * 2;
 const QUADTREE_CAPACITY = 4;
-const linkBatches = 10;
-const mouse: {x: number, y: number} = {x: 0, y: 0};
 
 
 /*
   Variables to be initiated
 */
-let linkDistance: number;
-let linkDistance2: number;
 let repulseDistance: number;
 let particleSpeed: number;
 let particleSize: number;
@@ -31,85 +27,49 @@ let ctx: CanvasRenderingContext2D;
 @Directive({
   selector: '[appParticles]'
 })
-export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
+export class ParticlesDirective implements OnDestroy, OnInit {
 
-  @Input() number = 80;
-  @Input() speed = 6;
-  @Input() linkWidth = 0;
-  @Input() linkDistance = 140;
-  @Input() size = 100;
-  // TO DO: distance relative to screen size
-  @Input() repulseDistance = 500;
-  @Input() particleHex = '#FFF';
-  @Input() linkHex = '#FFF';
-  @Input() densityArea = 800;
+  number = 200;
+  speed = 6;
+  size = 100;
+  particleHex = '#FFF';
+  densityArea = 800;
 
   particlesNumber: number;
   particlesList: Particle[] = [];
-  links: Link[][] = [];
-  linkBatchAlphas: number[] = [];
-  linkPool: Link[] = [];
-  candidates: Particle[] = [];
 
   animationFrame;
 
   constructor(
     public el: ElementRef,
-    private particles: ParticlesConfigService
+    private particles: ParticlesService
   ) {
     canvas = this.el.nativeElement;
     canvas.style.height = '100%';
     canvas.style.width = '100%';
     ctx = canvas.getContext('2d');
-    for (let i = 1 / (linkBatches + 1); i < 1; i += 1 / (linkBatches + 1)) {
-      this.links.push([]);
-      this.linkBatchAlphas.push(i);
-    }
     this.setCanvasSize();
     this.initVariables();
   }
 
   ngOnInit() {
     this.animate();
+    this.initVariables();
+    this.resetParticles();
   }
 
   @HostListener('window:resize') onResize() {
     this.setCanvasSize();
-  }
-
-  @HostListener('mouseleave') onMouseLeave() {
-    this.stopMouse();
-  }
-
-  @HostListener('touchend') onTouchEnd() {
-    this.stopMouse();
-  }
-
-  @HostListener('mousemove', ['$event']) onMouseMove(e) {
-    this.setMousePos(e.offsetX, e.offsetY);
-  }
-
-  @HostListener('touchmove', ['$event']) onTouchMove(e) {
-    this.setMousePos(e.touches[0].clientX, e.touches[0].clientY);
-  }
-
-  @HostListener('change') ngOnChanges() {
     this.initVariables();
-    this.resetParticles();
-  }
-  setMousePos(x, y) {
-    mouse.x = x;
-    mouse.y = y;
-  }
-
-  stopMouse() {
-    mouse.x = null;
   }
 
   initVariables() {
-    linkDistance = this.linkDistance;
-    linkDistance2 = (0.7 * linkDistance) ** 2;
-    repulseDistance = this.repulseDistance;
+    if (canvas.height < canvas.width) {
+      repulseDistance = Math.round(canvas.height * 0.52);
+    }
+    else {
+      repulseDistance = Math.round(canvas.width * 0.52);
+    }
     particleSpeed = this.speed;
     particleSize = this.size;
     if (this.densityArea) { this.scaleDensity(); }
@@ -133,14 +93,13 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
       }
       p.update(ctx, this.particles.speed);
     }
-    console.log(this.particlesList.length);
     ctx.fill();
   }
 
   resetParticles() {
     this.particlesList = [];
     for (let i = 0; i < this.particlesNumber; i++) {
-      this.particlesList.push(new Particle(canvas, particleSize, this.particles));
+      this.particlesList.push(new Particle(canvas, particleSize));
     }
     quadTree = new QuadTree();
     for (const p of this.particlesList) { p.reset(canvas); }
@@ -164,24 +123,8 @@ export class ParticlesDirective implements OnDestroy, OnInit, OnChanges {
   }
 }
 
-class Link {
-  p1: Particle;
-  p2: Particle;
-  alpha: number;
-  batchId: number;
-  constructor() {  }
-  // tslint:disable-next-line:no-shadowed-variable
-  addPath(ctx) {
-    ctx.moveTo(this.p1.x, this.p1.y);
-    ctx.lineTo(this.p2.x, this.p2.y);
-    return this;
-  }
-}
-
-
 class Particle {
   r: number;
-  speedScale: number;
   x: number;
   y: number;
   vx: number;
@@ -191,7 +134,6 @@ class Particle {
   // tslint:disable-next-line:no-shadowed-variable
   constructor(canvas, r) {
     this.r = r;
-    this.speedScale = particleSpeed / 2;
     this.reset(canvas, r);
   }
   // tslint:disable-next-line:no-shadowed-variable
@@ -210,20 +152,6 @@ class Particle {
   addPath(ctx) {
     ctx.moveTo(this.x + this.r,  this.y);
     ctx.arc(this.x,  this.y, this.r, 0, TAU);
-  }
-  near(p) {
-    return ((p.x - this.x) ** 2 + (p.y - this.y) ** 2) <= linkDistance2;
-  }
-  intersects(range) {
-    const xd = Math.abs(range.x - this.x);
-    const yd = Math.abs(range.y - this.y);
-    const r = linkDistance;
-    const w = range.w;
-    const h = range.h;
-    if (xd > r + w || yd > r + h) { return false; }
-    if (xd <= w || yd <= h) { return true; }
-    return  ((xd - w) ** 2 + (yd - h) ** 2) <= linkDistance2;
-
   }
   // tslint:disable-next-line:no-shadowed-variable
   update(ctx, speed) {
@@ -253,9 +181,8 @@ class Particle {
     quadTree.insert(this);
   }
   repulse() {
-    // TO DO: position relative to screen size
-    const dx = this.x - 960;
-    const dy = this.y - 540;
+    const dx = this.x - Math.round(canvas.width / 2);
+    const dy = this.y - Math.round(canvas.height / 2);
 
     const dist = (dx * dx + dy * dy) ** 0.5;
     let rf = ((1 - (dist / repulseDistance) ** 2)  * 100);
@@ -293,16 +220,6 @@ class Bounds {
 
   contains(p) {
     return (p.x >= this.left && p.x <= this.right && p.y >= this.top && p.y <= this.bottom);
-  }
-
-  near(p) {
-    if (!this.contains(p)) {
-      const dx = p.x - this.x;
-      const dy = p.y - this.y;
-      const dist = (dx * dx + dy * dy) - this.diagonal - linkDistance2;
-      return dist < 0;
-    }
-    return true;
   }
 }
 
@@ -378,29 +295,6 @@ class QuadTree {
     }
 
     this.divided = true;
-  }
-  query(part, fc, found) {
-    let i = this.pointCount;
-    if (this.depth === 0 || this.boundary.near(part)) {
-      if (this.depth > 1) {
-        while (i--) {
-          const p = this.points[i];
-          if (!p.explored && part.near(p)) { found[fc++] = p; }
-        }
-        if (this.divided) {
-          fc = this.NE.pointCount ? this.NE.query(part, fc, found) : fc;
-          fc = this.NW.pointCount ? this.NW.query(part, fc, found) : fc;
-          fc = this.SE.pointCount ? this.SE.query(part, fc, found) : fc;
-          fc = this.SW.pointCount ? this.SW.query(part, fc, found) : fc;
-        }
-      } else if (this.divided) {
-        fc = this.NE.query(part, fc, found);
-        fc = this.NW.query(part, fc, found);
-        fc = this.SE.query(part, fc, found);
-        fc = this.SW.query(part, fc, found);
-      }
-    }
-    return fc;
   }
 
   close() {

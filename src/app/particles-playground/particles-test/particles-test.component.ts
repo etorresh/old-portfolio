@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {ParticlesConfigService} from '../../particles-config.service';
+import {ParticlesService} from '../../particles.service';
 
 @Component({
   selector: 'app-particles-test',
@@ -12,7 +12,7 @@ export class ParticlesTestComponent implements OnInit {
   width = 100;
   height = 100;
 
-  constructor(private particles: ParticlesConfigService) {
+  constructor(private particles: ParticlesService) {
   }
   @HostListener('document:keydown', ['$event'])
   handleKeyBoardEvent(event: KeyboardEvent) {
