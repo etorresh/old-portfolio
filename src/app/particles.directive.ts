@@ -54,9 +54,11 @@ export class ParticlesDirective implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.animate();
+    this.setCanvasSize();
     this.initVariables();
     this.resetParticles();
   }
+
 
   @HostListener('window:resize') onResize() {
     this.setCanvasSize();
@@ -65,10 +67,10 @@ export class ParticlesDirective implements OnDestroy, OnInit {
 
   initVariables() {
     if (canvas.height < canvas.width) {
-      repulseDistance = Math.round(canvas.height * 0.52);
+      repulseDistance = Math.floor(canvas.height * 0.62);
     }
     else {
-      repulseDistance = Math.round(canvas.width * 0.52);
+      repulseDistance = Math.floor(canvas.width * 0.62);
     }
     particleSpeed = this.speed;
     particleSize = this.size;
@@ -83,13 +85,23 @@ export class ParticlesDirective implements OnDestroy, OnInit {
   }
 
   updateParticles() {
+    let rWidth;
+    let rHeight;
+    if (this.particles.sidebar) {
+      rWidth = Math.round((canvas.width - 288) / 2);
+    }
+    else {
+      rWidth = Math.round(canvas.width / 2);
+    }
+    rHeight = Math.round(canvas.height / 2);
+    quadTree.close();
     quadTree.close();
     ctx.fillStyle = this.particleHex;
     ctx.beginPath();
     for (const p of this.particlesList)
     {
       if (this.particles.repulse) {
-        p.repulse();
+        p.repulse(rWidth, rHeight, this.particles.repulseScale);
       }
       p.update(ctx, this.particles.speed);
     }
@@ -124,6 +136,7 @@ export class ParticlesDirective implements OnDestroy, OnInit {
 }
 
 class Particle {
+  particles;
   r: number;
   x: number;
   y: number;
@@ -180,12 +193,12 @@ class Particle {
     this.addPath(ctx);
     quadTree.insert(this);
   }
-  repulse() {
-    const dx = this.x - Math.round(canvas.width / 2);
-    const dy = this.y - Math.round(canvas.height / 2);
+  repulse(width, height, repulseScale) {
+    const dx = this.x - width;
+    const dy = this.y - height;
 
     const dist = (dx * dx + dy * dy) ** 0.5;
-    let rf = ((1 - (dist / repulseDistance) ** 2)  * 100);
+    let rf = ((1 - (dist / (repulseDistance * repulseScale)) ** 2)  * 100);
     rf = (rf < 0 ? 0 : rf > 50  ? 50 : rf) / dist;
 
     const posX = this.x + dx * rf;

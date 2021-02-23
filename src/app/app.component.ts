@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { faAlignLeft } from '@fortawesome/free-solid-svg-icons';
 import {trigger, state, style, animate, transition} from '@angular/animations';
+import {ParticlesService} from './particles.service';
 
 @Component({
   selector: 'app-root',
@@ -24,11 +25,14 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
   ]
 })
 export class AppComponent {
+  constructor(private particles: ParticlesService) {
+  }
   title = 'portfolio';
   faAlignLeft = faAlignLeft;
   status = true;
 
   toggleSidebar() {
     this.status = !this.status;
+    this.particles.sidebar = this.status;
   }
 }

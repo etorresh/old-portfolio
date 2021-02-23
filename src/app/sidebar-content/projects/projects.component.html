@@ -1,4 +1,7 @@
-<div class="h-100 w-100 d-flex align-items-center">
+<div class="particles-wrapper">
+  <canvas appParticles></canvas>
+</div>
+<div class="h-100 w-100 d-flex align-items-center" [ngClass]="(whiteBackground) ? 'whiteIn' : 'whiteOut'">
   <div class="container">
    <div class="row justify-content-center">
       <div class="col-md-6 d-flex align-items-stretch">

@@ -12,8 +12,6 @@ a {
   color: #8fb8d4;
 }
 
-
-
 /*
 !important is needed in this case because Bootstrap also uses !important in many of the utility classes like border-*.
  */
