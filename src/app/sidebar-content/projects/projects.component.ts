@@ -17,6 +17,7 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
   }
   mouseEnter(cardNumber) {
+    //
       clearInterval(this.scalebackTimer);
       this.particles.repulse = true;
       this.whiteBackground = false;
