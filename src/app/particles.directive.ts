@@ -1,6 +1,3 @@
-// Customized branch of:
-// https://github.com/audrenbdb/angular-particlesjs
-
 import {Directive, ElementRef, OnDestroy, HostListener, OnInit} from '@angular/core';
 import {ParticlesService} from './particles.service';
 
