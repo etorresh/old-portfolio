@@ -1,7 +1,11 @@
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="text-center float-left sidebar" orientation="vertical" style="overflow: hidden">
   <div class="my-auto">
     <li style="margin-bottom: 10px">
-      <img class="rounded-circle border" style="width: 55%" src="assets/myFace/myFace1.jpg" alt="My face">
+      <ngb-carousel #carousel [showNavigationArrows]="false" [showNavigationIndicators]="false" [keyboard]="false" [interval]="0" style="outline: none">
+        <ng-template ngbSlide *ngFor="let face of myFaces">
+          <img class="rounded-circle border" [src]="face" (click)="nextSlide()">
+        </ng-template>
+      </ngb-carousel>
     </li>
     <div>
       <li *ngFor="let option of options" ngbNavItem = "{{option}}" class="overflow-hidden">

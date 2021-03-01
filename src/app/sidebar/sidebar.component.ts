@@ -1,4 +1,5 @@
-import { Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {NgbCarousel} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,5 +9,11 @@ import { Component} from '@angular/core';
 export class SidebarComponent {
   active = 'ABOUT';
   options = ['ABOUT', 'EXPERIENCE', 'PROJECTS', 'SKILLS', 'EDUCATION'];
+  myFaces = ['assets/myFace/myFace1.jpg', 'assets/myFace/myFace2.png', 'assets/myFace/myFace3.jpg', 'assets/myFace/myFace4.png'];
+
+  @ViewChild('carousel', {static: true}) carousel: NgbCarousel;
   constructor() { }
+  nextSlide() {
+    this.carousel.next();
+  }
 }

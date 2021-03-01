@@ -18,4 +18,6 @@ a {
 .border {
   border-width: 7px !important;
   border-color: #4f8db4 !important;
+  width: 55%;
+  cursor: pointer;
 }
