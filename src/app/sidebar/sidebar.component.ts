@@ -4,7 +4,7 @@ import {NgbCarousel} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent {
   active = 'ABOUT';
