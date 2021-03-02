@@ -1,10 +1,17 @@
 <div class="particles-wrapper">
   <canvas appParticles></canvas>
 </div>
+<div class="video-wrapper" [ngClass]="{'video-wrapper-no-sidebar': !particles.sidebar}">
+  <div *ngIf="this.particles.repulseScale >= 0.9" class="w-100 h-100 d-flex align-items-center">
+    <div class="mx-auto">
+      YEET
+    </div>
+  </div>
+</div>
 <div class="h-100 w-100 d-flex align-items-center" [ngClass]="(whiteBackground) ? 'whiteIn' : 'whiteOut'">
   <div class="container">
    <div class="row justify-content-center">
-      <div class="col-md-6 d-flex align-items-stretch">
+      <div class="col-md-6 d-flex align-items-stretch" style="padding-top: 30px">
         <div class="card" (mouseenter)="mouseEnter(0)" (mouseleave)="mouseLeave()">
           <div class="card-body d-flex flex-column">
             <img src="assets/galaxer-icon.jpg" alt="Galaxer logo" class="square-logo mx-auto">
@@ -19,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 d-flex align-items-stretch">
+      <div class="col-md-6 d-flex align-items-stretch" style="padding-top: 30px">
         <div class="card" (mouseenter)="mouseEnter(1)" (mouseleave)="mouseLeave()">
           <div class="card-body">
             <img src="assets/markov-icon.png" alt="MarkovTweets logo" class="horizontal-logo mx-auto">

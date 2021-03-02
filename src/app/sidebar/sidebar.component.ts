@@ -13,7 +13,4 @@ export class SidebarComponent {
 
   @ViewChild('carousel', {static: true}) carousel: NgbCarousel;
   constructor() { }
-  nextSlide() {
-    this.carousel.next();
-  }
 }

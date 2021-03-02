@@ -13,7 +13,6 @@ import { EducationComponent } from './sidebar-content/education/education.compon
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ThemeService } from './sidebar-content/theme.service';
-import { ParticlesTestComponent } from './particles-playground/particles-test/particles-test.component';
 import {ParticlesDirective} from './particles.directive';
 import {ParticlesService} from './particles.service';
 
@@ -26,7 +25,6 @@ import {ParticlesService} from './particles.service';
     ProjectsComponent,
     SkillsComponent,
     EducationComponent,
-    ParticlesTestComponent,
     ParticlesDirective
   ],
   imports: [

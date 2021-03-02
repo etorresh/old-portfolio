@@ -3,7 +3,7 @@
     <li style="margin-bottom: 10px">
       <ngb-carousel #carousel [showNavigationArrows]="false" [showNavigationIndicators]="false" [keyboard]="false" [interval]="0" style="outline: none">
         <ng-template ngbSlide *ngFor="let face of myFaces">
-          <img class="rounded-circle border" [src]="face" (click)="nextSlide()">
+          <img class="rounded-circle border" [src]="face" (click)="this.carousel.next()" alt="Emilio's face">
         </ng-template>
       </ngb-carousel>
     </li>
