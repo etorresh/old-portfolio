@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ThemeService {
   private started = false;
-  private colors = ['pink', 'orange', 'green', 'purple'];
+  private colors = ['blue', 'orange', 'yellow', 'purple'];
   private colorsIndex = 0;
   private color = 'gray';
 
   private startAnimation() {
     this.started = true;
     setTimeout(() => {
-      this.color = 'pink';
+      this.color = 'blue';
       this.changeColors();
     }, 1500);
   }

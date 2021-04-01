@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {trigger, state, style, animate, transition} from '@angular/animations';
 import {ThemeService} from '../theme.service';
-
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
@@ -9,33 +8,33 @@ import {ThemeService} from '../theme.service';
   animations: [
     trigger('animateText', [
       state('gray', style({
-        color: '#212429'
+        color: '#353e3d'
       })),
-      state('pink', style({
-        color: '#f2006e'
+      state('blue', style({
+        color: '#2472a3'
       })),
       state('orange', style({
-        color: '#ff613a'
+        color: '#a35024'
       })),
-      state('green', style({
-        color: '#04e762'
+      state('yellow', style({
+        color: '#a39024'
       })),
       state('purple', style({
-        color: '#8c53c8'
+        color: '#7d24a3'
       })),
-      transition('gray => pink', [
+      transition('gray => blue', [
         animate('1s')
       ]),
-      transition('pink => orange', [
+      transition('blue => orange', [
         animate('1s')
       ]),
-      transition('orange => green', [
+      transition('orange => yellow', [
         animate('1s')
       ]),
-      transition('green => purple', [
+      transition('yellow => purple', [
         animate('1s')
       ]),
-      transition('purple => pink', [
+      transition('purple => blue', [
         animate('1s')
       ]),
     ]),
@@ -43,7 +42,4 @@ import {ThemeService} from '../theme.service';
 })
 export class AboutComponent {
   constructor(public theme: ThemeService) { }
-  newWindow(url) {
-    window.open(url, '_blank');
-  }
 }

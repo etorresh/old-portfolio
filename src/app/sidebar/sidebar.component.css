@@ -1,8 +1,3 @@
-.selected {
-  color: white;
-}
-
-
 .sidebar {
   background: #2472a3;
   height: 100vh;
@@ -10,6 +5,14 @@
 
 a {
   color: #8fb8d4;
+}
+
+a:hover {
+  color: #c9e0f0;
+}
+
+.selected {
+  color: white !important;
 }
 
 /*

@@ -4,7 +4,6 @@ import {AboutComponent} from './sidebar-content/about/about.component';
 import {ExperienceComponent} from './sidebar-content/experience/experience.component';
 import {ProjectsComponent} from './sidebar-content/projects/projects.component';
 import {SkillsComponent} from './sidebar-content/skills/skills.component';
-import {EducationComponent} from './sidebar-content/education/education.component';
 
 
 const routes: Routes = [
@@ -12,8 +11,7 @@ const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'experience', component: ExperienceComponent},
   {path: 'projects', component: ProjectsComponent},
-  {path: 'skills', component: SkillsComponent},
-  {path: 'education', component: EducationComponent},
+  {path: 'skills', component: SkillsComponent}
 ];
 
 @NgModule({

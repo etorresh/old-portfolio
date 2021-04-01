@@ -2,15 +2,12 @@
   color: #353e3d;
   font-size: 1rem;
   text-align: center;
+  padding: 20px 40px 40px;
 }
 
 .card-title {
   font-size: 2rem;
   text-align: center;
-}
-
-.card-body {
-  padding: 20px 40px 40px;
 }
 
 .card {
