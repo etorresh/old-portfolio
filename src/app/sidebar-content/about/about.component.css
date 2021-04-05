@@ -1,3 +1,4 @@
-:host {
-  font-size: 4vw;
+.vertical-line {
+  border-left: 8px solid #2472a3;
+  height: 90px;
 }
