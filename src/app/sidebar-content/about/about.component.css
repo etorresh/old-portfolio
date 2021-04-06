@@ -4,7 +4,8 @@
 }
 
 .card {
-  width: 315px;
+  width: 320px;
+  margin-left: 25px;
 }
 
 .card-title {
@@ -13,4 +14,9 @@
 
 .card-text {
   font-size: 12px;
+}
+
+.about-header {
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
