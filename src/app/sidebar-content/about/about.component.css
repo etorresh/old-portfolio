@@ -2,3 +2,15 @@
   border-left: 8px solid #2472a3;
   height: 90px;
 }
+
+.card {
+  width: 315px;
+}
+
+.card-title {
+  font-size: 16px;
+}
+
+.card-text {
+  font-size: 12px;
+}
