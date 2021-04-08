@@ -24,4 +24,5 @@
 
 .footer {
   z-index: 1;
+  border-top: 4px #1d2124 solid;
 }
