@@ -36,15 +36,20 @@
   </div>
   <div class="fixed-bottom footer" [@openClose]="this.particles.sidebar ? 'open' : 'close'">
     <div class="container">
-      <div class="row text-center">
+      <div class="row text-center mt-2">
         <div class="col-4">
-          <h6>Calgary, Alberta</h6>
+          <img src="assets/about/undraw_map_1r69.svg" alt="Map" width="50">
+          <h6 class="btn-align">Calgary, Alberta</h6>
         </div>
         <div class="col-4">
-          <button type="button" class="btn btn-light">Download Resume</button>
+          <img src="assets/about/undraw_Resume_re_hkth.svg" alt="Resume" width="50">
+          <a href="assets/documents/Emilio%20Torres%20Resume.pdf" target="_blank" download style="text-decoration: none">
+            <button type="button" class="btn btn-light mx-auto" style="margin: 15px">Download Resume</button>
+          </a>
         </div>
         <div class="col-4">
-          <h6><a href="mailto: me@etorresh.com">me@etorresh.com</a></h6>
+          <img src="assets/about/undraw_Mailbox_re_dvds.svg" alt="Mailbox" width="50">
+          <a class="btn-align" href="mailto: me@etorresh.com" target="_blank">me@etorresh.com</a>
         </div>
       </div>
     </div>
