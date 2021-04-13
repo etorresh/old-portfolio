@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {ParticlesService} from '../../particles.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
@@ -25,3 +26,4 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class AboutComponent {
   constructor(public particles: ParticlesService) { }
 }
+

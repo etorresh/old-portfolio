@@ -1,4 +1,4 @@
-<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="text-center float-left sidebar" orientation="vertical" style="overflow: hidden">
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="text-center float-left sidebar" orientation="vertical">
   <div class="my-auto">
     <li style="margin-bottom: 10px">
       <ngb-carousel #carousel [showNavigationArrows]="false" [showNavigationIndicators]="false" [keyboard]="false" [interval]="0" style="outline: none">
@@ -8,7 +8,7 @@
       </ngb-carousel>
     </li>
     <div>
-      <li *ngFor="let option of options" ngbNavItem = "{{option}}" class="overflow-hidden">
+      <li *ngFor="let option of options" ngbNavItem = "{{option}}">
         <a ngbNavLink class="text-center" routerLinkActive="selected" [routerLink]="option | lowercase"><b>{{option}}</b></a>
       </li>
     </div>

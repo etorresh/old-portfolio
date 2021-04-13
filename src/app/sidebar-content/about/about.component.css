@@ -19,7 +19,6 @@
 
 .about-header {
   padding-top: 80px;
-  padding-bottom: 80px;
 }
 
 .footer {
@@ -38,4 +37,24 @@
 .btn-light {
   margin: 15px;
   display: block;
+}
+
+.align-text {
+  text-align: right;
+}
+
+@media only screen and (max-width: 1400px) and (min-width: 1200px) {
+  .title-optional {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .align-text {
+    text-align: center;
+  }
+
+  .disable-phone {
+    display: none;
+  }
 }
