@@ -1,7 +1,7 @@
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="text-center float-left sidebar" orientation="vertical">
   <div class="my-auto">
     <li style="margin-bottom: 10px">
-      <ngb-carousel #carousel [showNavigationArrows]="false" [showNavigationIndicators]="false" [keyboard]="false" [interval]="0" style="outline: none">
+      <ngb-carousel #carousel [showNavigationArrows]="false" [showNavigationIndicators]="false" [keyboard]="false" [interval]="0" class="face-button">
         <ng-template ngbSlide *ngFor="let face of myFaces">
           <img class="rounded-circle border" [src]="face" (click)="this.carousel.next()" alt="Emilio's face">
         </ng-template>

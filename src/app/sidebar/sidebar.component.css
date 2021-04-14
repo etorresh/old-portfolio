@@ -21,6 +21,12 @@ a:hover {
 .border {
   border-width: 7px !important;
   border-color: #4f8db4 !important;
-  width: 55%;
+  width: 158px;
+  height: 158px;
   cursor: pointer;
+}
+
+.face-button {
+  outline: none;
+  width: 288px;
 }
