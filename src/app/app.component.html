@@ -1,13 +1,15 @@
 <div class="d-flex">
-  <div class="sidebar sticky-top" [@openClose]="status ? 'open' : 'close'" style="z-index: 2">
-    <app-sidebar></app-sidebar>
+  <div class="position-fixed fixed-top" style="width: 332px">
+    <div class="sidebar" [@openClose]="status ? 'open' : 'close'" style="z-index: 1">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div>
+      <button type="button" class="btn shadow-none" (click)="toggleSidebar()" style="background-color: #2472a3">
+        <fa-icon [icon]="faAlignLeft"></fa-icon>
+      </button>
+    </div>
   </div>
-  <div class="sticky-top">
-    <button type="button" class="btn shadow-none" (click)="toggleSidebar()" style="background-color: #2472a3">
-      <fa-icon [icon]="faAlignLeft"></fa-icon>
-    </button>
-  </div>
-  <div class="content flex-grow-1">
+  <div class="flex-grow-1" [@openCloseContent]="status ? 'open' : 'close'">
     <router-outlet></router-outlet>
   </div>
 </div>

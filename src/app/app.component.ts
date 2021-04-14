@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { faAlignLeft } from '@fortawesome/free-solid-svg-icons';
-import {trigger, state, style, animate, transition} from '@angular/animations';
+import {Component} from '@angular/core';
+import {faAlignLeft} from '@fortawesome/free-solid-svg-icons';
+import {animate, group, state, style, transition, trigger} from '@angular/animations';
 import {ParticlesService} from './particles.service';
 
 @Component({
@@ -16,12 +16,30 @@ import {ParticlesService} from './particles.service';
       marginLeft: '-288px'
     })),
     transition('open => close', [
-      animate('0.5s')
+      group([
+        animate('0.5s'),
+      ])
     ]),
     transition('close => open', [
-      animate('0.25s')
+      group([
+        animate('0.25s'),
+      ])
     ]),
   ]),
+    trigger('openCloseContent', [
+      state('open', style({
+        marginLeft: '244px'
+      })),
+      state('close', style({
+        marginLeft: '0'
+      })),
+      transition('open => close', [
+          animate('0.5s'),
+      ]),
+      transition('close => open', [
+          animate('0.25s'),
+      ]),
+    ]),
   ]
 })
 export class AppComponent {
