@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {faAlignLeft} from '@fortawesome/free-solid-svg-icons';
-import {animate, group, state, style, transition, trigger} from '@angular/animations';
+import {animate, animateChild, group, query, state, style, transition, trigger} from '@angular/animations';
 import {ParticlesService} from './particles.service';
 
 @Component({
@@ -34,10 +34,16 @@ import {ParticlesService} from './particles.service';
         marginLeft: '0'
       })),
       transition('open => close', [
+        group([
           animate('0.5s'),
+          query('@openClose', animateChild())
+        ])
       ]),
       transition('close => open', [
+        group([
+          query('@openClose', animateChild()),
           animate('0.25s'),
+        ])
       ]),
     ]),
   ]
