@@ -72,9 +72,10 @@ export class AboutComponent implements  OnInit, OnDestroy{
   onResize(_event?) {
     this.innerWidth = window.innerWidth;
     this.animateFlexbox = (this.innerWidth <= 1297) && (this.innerWidth >= 1020);
-    if (!this.animateFlexbox && !this.sidebarSubscription.closed) {
+    if (!(this.sidebarSubscription === undefined) && !this.animateFlexbox && !this.sidebarSubscription.closed) {
       this.sidebarSubscription.unsubscribe();
     }
+    console.log(this.sidebarSubscription);
     if (this.animateFlexbox && (this.sidebarSubscription === undefined || this.sidebarSubscription.closed)) {
       this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
         if (!this.firstRun) {
