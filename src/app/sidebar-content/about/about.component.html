@@ -26,7 +26,7 @@
           <p class="card-text">In my free time, I develop and make videos about stuff that I find fun. Lately, a fighting game where players control their character through Twitch chat, and a bot to automate social media interactions to farm likes, comments, and followers on Twitter.</p>
         </div>
       </div>
-      <div class="card other-cards" [ngClass]="{'last-card': (this.sidebarService.getActive() | async) == true}" [@cardAnimation]="this.animateFlexboxState">
+      <div class="card other-cards last-card" [@cardAnimation]="this.animateFlexboxState">
         <img class="card-img-top" src="assets/about/snowboard.jpg" alt="Snowboard" style="height: 240px">
         <div class="card-body">
           <h5 class="card-title">M Y&nbsp;&nbsp;&nbsp;&nbsp;H O B B I E S </h5>

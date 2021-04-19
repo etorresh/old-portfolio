@@ -60,21 +60,6 @@ export class AboutComponent implements  OnInit, OnDestroy{
   private sidebarSubscription: Subscription;
   ngOnInit() {
     this.onResize();
-    this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
-      if (!this.firstRun) {
-        if (status) {
-          this.animateFlexboxState = 'empty';
-          setTimeout(() => {
-            this.animateFlexboxState = 'fullNoTran';
-          }, 240);
-        } else {
-          this.animateFlexboxState = 'emptyNoTran';
-          setTimeout(() => {
-            this.animateFlexboxState = 'full';
-          }, 10);
-        }
-      }
-    });
     this.firstRun = false;
   }
 
@@ -86,6 +71,26 @@ export class AboutComponent implements  OnInit, OnDestroy{
   // tslint:disable-next-line:variable-name
   onResize(_event?) {
     this.innerWidth = window.innerWidth;
-    this.animateFlexbox = this.innerWidth <= 1297;
+    this.animateFlexbox = (this.innerWidth <= 1297) && (this.innerWidth >= 1020);
+    if (!this.animateFlexbox && !this.sidebarSubscription.closed) {
+      this.sidebarSubscription.unsubscribe();
+    }
+    if (this.animateFlexbox && (this.sidebarSubscription === undefined || this.sidebarSubscription.closed)) {
+      this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
+        if (!this.firstRun) {
+          if (status) {
+            this.animateFlexboxState = 'empty';
+            setTimeout(() => {
+              this.animateFlexboxState = 'fullNoTran';
+            }, 240);
+          } else {
+            this.animateFlexboxState = 'emptyNoTran';
+            setTimeout(() => {
+              this.animateFlexboxState = 'full';
+            }, 10);
+          }
+        }
+      });
+    }
   }
 }
