@@ -1,6 +1,7 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SidebarService} from '../../sidebar.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-about',
@@ -22,36 +23,68 @@ import {SidebarService} from '../../sidebar.service';
       ]),
     ]),
     trigger('cardAnimation', [
-      state('open', style({
-        width: '320px'
+      state('full', style({
+        width: '320px',
+        opacity: 1
       })),
-      state('close', style({
-        width: 0
+      state('empty', style({
+        width: 0,
+        opacity: 0
       })),
-      transition('open => close', [
+      state('fullNoTran', style({
+        width: '320px',
+        opacity: 1
+      })),
+      state('emptyNoTran', style({
+        width: 0,
+        opacity: 0
+      })),
+      transition('full => empty', [
+        animate('0.25s')
+      ]),
+      transition('empty => full', [
         animate('0.5s')
       ]),
-      transition('close => open', [
-        animate('0.25s')
+      transition('emptyNoTran => full', [
+        animate('0.49s')
       ]),
     ]),
   ]
 })
-export class AboutComponent implements  OnInit{
+export class AboutComponent implements  OnInit, OnDestroy{
   constructor(public sidebarService: SidebarService) { }
-  public animateFlexbox = false;
-  public animateFlexboxState: string;
+  public animateFlexbox: boolean;
+  public animateFlexboxState = 'full';
+  private firstRun = true;
   private innerWidth: number;
+  private sidebarSubscription: Subscription;
   ngOnInit() {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth <= 1297) {
-      this.animateFlexbox = true;
-    }
+    this.onResize();
+    this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
+      if (!this.firstRun) {
+        if (status) {
+          this.animateFlexboxState = 'empty';
+          setTimeout(() => {
+            this.animateFlexboxState = 'fullNoTran';
+          }, 240);
+        } else {
+          this.animateFlexboxState = 'emptyNoTran';
+          setTimeout(() => {
+            this.animateFlexboxState = 'full';
+          }, 10);
+        }
+      }
+    });
+    this.firstRun = false;
+  }
+
+  ngOnDestroy() {
+    this.sidebarSubscription.unsubscribe();
   }
 
   @HostListener('window:resize', ['$event'])
   // tslint:disable-next-line:variable-name
-  onResize(_event) {
+  onResize(_event?) {
     this.innerWidth = window.innerWidth;
     this.animateFlexbox = this.innerWidth <= 1297;
   }
