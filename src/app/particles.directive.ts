@@ -1,5 +1,7 @@
-import {Directive, ElementRef, OnDestroy, HostListener, OnInit} from '@angular/core';
-import {ParticlesService} from './particles.service';
+import {Directive, ElementRef, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {ParticlesService} from './sidebar-content/projects/particles.service';
+import {async} from 'rxjs/internal/scheduler/async';
+import {SidebarService} from './sidebar.service';
 
 /*
   Variables to be used outside of directive scope
@@ -38,6 +40,7 @@ export class ParticlesDirective implements OnDestroy, OnInit {
   animationFrame;
 
   constructor(
+    public sidebarService: SidebarService,
     public el: ElementRef,
     private particles: ParticlesService
   ) {
@@ -84,7 +87,7 @@ export class ParticlesDirective implements OnDestroy, OnInit {
   updateParticles() {
     let rWidth;
     let rHeight;
-    if (this.particles.sidebar) {
+    if ((this.sidebarService.getActive() || async)) {
       rWidth = Math.round((canvas.width - 288) / 2);
     }
     else {

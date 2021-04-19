@@ -1,12 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ParticlesService {
   public speed = 6;
   public repulse = false;
-  public sidebar = true;
   public repulseScale = 0;
 
   constructor() { }

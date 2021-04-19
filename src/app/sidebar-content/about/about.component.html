@@ -8,7 +8,7 @@
       <p class="m-0 disable-phone" style="font-size: 20px">Hi! This website is a collection of the things I have learned and created over the years.</p>
     </div>
   </div>
-  <div class="row justify-content-center mt-5">
+  <div class="row justify-content-center card-row">
       <div class="card">
         <img class="card-img-top" src="assets/about/vallarta.jpg" alt="Puerto Vallarta" style="height: 240px">
         <div class="card-body">
@@ -19,14 +19,14 @@
             Unity3D games.</p>
         </div>
       </div>
-      <div class="card">
+      <div class="card other-cards">
         <img class="card-img-top" src="assets/about/workingSpace.jpg" alt="Working space" style="height: 240px">
         <div class="card-body">
           <h5 class="card-title">W H A T&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;&nbsp;&nbsp;&nbsp;A M&nbsp;&nbsp;&nbsp;&nbsp;W O R K I N G&nbsp;&nbsp;&nbsp;&nbsp;O N</h5>
           <p class="card-text">In my free time, I develop and make videos about stuff that I find fun. Lately, a fighting game where players control their character through Twitch chat, and a bot to automate social media interactions to farm likes, comments, and followers on Twitter.</p>
         </div>
       </div>
-      <div class="card">
+      <div class="card other-cards" [ngClass]="{'last-card': (this.sidebarService.getActive() | async) == true}" [@cardAnimation]="this.animateFlexboxState">
         <img class="card-img-top" src="assets/about/snowboard.jpg" alt="Snowboard" style="height: 240px">
         <div class="card-body">
           <h5 class="card-title">M Y&nbsp;&nbsp;&nbsp;&nbsp;H O B B I E S </h5>
@@ -34,7 +34,7 @@
         </div>
       </div>
   </div>
-  <div class="fixed-bottom footer" [@openClose]="this.particles.sidebar ? 'open' : 'close'">
+  <div class="fixed-bottom footer" [@openClose]="(this.sidebarService.getActive() | async) ? 'open' : 'close'">
     <div class="container">
       <div class="row text-center mt-4">
         <div class="col-4">

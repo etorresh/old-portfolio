@@ -5,6 +5,15 @@
 
 .card {
   width: 320px;
+  height: 421px;
+  margin-top: 25px;
+}
+
+.card-row {
+  margin-top: 25px;
+}
+
+.other-cards {
   margin-left: 25px;
 }
 
@@ -56,5 +65,17 @@
 
   .disable-phone {
     display: none;
+  }
+}
+
+@media only screen and (min-height: 940px) {
+  .card-row {
+    margin-top: 75px;
+  }
+}
+
+@media only screen and (max-width: 1297px) {
+  .last-card {
+    margin-bottom: 165px;
   }
 }

@@ -1,7 +1,7 @@
 <div class="particles-wrapper">
   <canvas appParticles></canvas>
 </div>
-<div class="video-wrapper" [ngClass]="{'video-wrapper-no-sidebar': !particles.sidebar}">
+<div class="video-wrapper" [ngClass]="{'video-wrapper-no-sidebar': !(this.sidebarService.getActive() | async)}">
   <div *ngIf="this.particles.repulseScale >= 0.9" class="w-100 h-100 d-flex align-items-center">
     <div class="mx-auto">
       <!-- Add projects video here -->

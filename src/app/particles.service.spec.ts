@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ParticlesService } from './particles.service';
+import {ParticlesService} from './sidebar-content/projects/particles.service';
 
 describe('ParticlesService', () => {
   let service: ParticlesService;

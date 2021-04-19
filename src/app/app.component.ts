@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {faAlignLeft} from '@fortawesome/free-solid-svg-icons';
 import {animate, animateChild, group, query, state, style, transition, trigger} from '@angular/animations';
-import {ParticlesService} from './particles.service';
+import {SidebarService} from './sidebar.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,7 @@ import {ParticlesService} from './particles.service';
   ]),
     trigger('openCloseContent', [
       state('open', style({
-        marginLeft: '244px'
+        marginLeft: '288px'
       })),
       state('close', style({
         marginLeft: '0'
@@ -36,27 +37,38 @@ import {ParticlesService} from './particles.service';
       transition('open => close', [
         group([
           animate('0.5s'),
-          query('@openClose', animateChild())
+          query('@openClose', animateChild(), {optional: true}),
+          query('@cardAnimation', animateChild(), {optional: true})
         ])
       ]),
       transition('close => open', [
         group([
-          query('@openClose', animateChild()),
+          query('@openClose', animateChild(), {optional: true}),
+          query('@cardAnimation', animateChild(), {optional: true}),
           animate('0.25s'),
         ])
       ]),
     ]),
   ]
 })
-export class AppComponent {
-  constructor(private particles: ParticlesService) {
+export class AppComponent implements OnInit, OnDestroy{
+  constructor(public sidebarService: SidebarService) {
   }
   title = 'portfolio';
   faAlignLeft = faAlignLeft;
-  status = true;
+  private sidebarSubscription: Subscription;
+  private sidebarStatus: boolean;
+  ngOnInit() {
+    this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
+      this.sidebarStatus = status;
+    });
+  }
+
+  ngOnDestroy() {
+    this.sidebarSubscription.unsubscribe();
+  }
 
   toggleSidebar() {
-    this.status = !this.status;
-    this.particles.sidebar = this.status;
+    this.sidebarService.setActive(!this.sidebarStatus);
   }
 }

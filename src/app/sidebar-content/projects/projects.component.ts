@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import {ParticlesService} from '../../particles.service';
+import {Component, OnInit} from '@angular/core';
+import {ParticlesService} from './particles.service';
+import {SidebarService} from '../../sidebar.service';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css']
+  styleUrls: ['./projects.component.css'],
+  providers: [ParticlesService]
 })
 export class ProjectsComponent implements OnInit {
 
-  constructor(public particles: ParticlesService) {
+  constructor(public particles: ParticlesService, public sidebarService: SidebarService) {
   }
   public whiteBackground = true;
   private scaleTimer;
