@@ -68,9 +68,15 @@
   }
 }
 
-@media only screen and (max-width: 1297px) {
+@media only screen and (min-width: 993px) {
   .last-card {
     margin-bottom: 165px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .last-card {
+    margin-bottom: 105px;
   }
 }
 
