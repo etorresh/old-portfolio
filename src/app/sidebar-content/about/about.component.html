@@ -2,13 +2,14 @@
   <div class="row about-header">
     <div class="col-xl-5 d-flex align-items-center col-lg-12">
       <h1 class="align-text m-0 w-100">Emilio Torres<br> <span class="title-optional">A Software Developer.</span></h1>
-      <div class="vertical-line ml-3 disable-phone"></div>
+      <div class="vertical-line ml-3 d-none d-xl-inline"></div>
     </div>
+    <div class="mx-auto horizontal-line d-xl-none"></div>
     <div class="col-xl-6 col-lg-12 d-flex align-items-center">
-      <p class="m-0 disable-phone" style="font-size: 20px">Hi! This website is a collection of the things I have learned and created over the years.</p>
+      <p class="m-0 d-none d-xl-inline" style="font-size: 20px">Hi! This website is a collection of the things I have learned and created over the years.</p>
     </div>
   </div>
-  <div class="row justify-content-center card-row">
+  <div class="row justify-content-center card-row d-lg-flex d-sm-inline">
       <div class="card">
         <img class="card-img-top" src="assets/about/vallarta.jpg" alt="Puerto Vallarta" style="height: 240px">
         <div class="card-body">
@@ -19,6 +20,7 @@
             Unity3D games.</p>
         </div>
       </div>
+      <br>
       <div class="card other-cards">
         <img class="card-img-top" src="assets/about/workingSpace.jpg" alt="Working space" style="height: 240px">
         <div class="card-body">
@@ -36,19 +38,19 @@
   </div>
   <div class="fixed-bottom footer" [@openClose]="(this.sidebarService.getActive() | async) ? 'open' : 'close'">
     <div class="container">
-      <div class="row text-center mt-4">
-        <div class="col-4">
-          <img src="assets/about/undraw_map_1r69.svg" alt="Map" width="50">
+      <div class="row text-center mt-sm-3 mt-lg-4">
+        <div class="col-lg-4 col-sm-12 d-none d-lg-inline">
+          <img class="footer-img" src="assets/about/undraw_map_1r69.svg" alt="Map" width="50">
           <h6 class="btn-align">Calgary, Alberta</h6>
         </div>
-        <div class="col-4">
-          <img src="assets/about/undraw_Resume_re_hkth.svg" alt="Resume" width="50">
+        <div class="col-lg-4 col-sm-12">
+          <img class="d-none d-lg-inline footer-img" src="assets/about/undraw_Resume_re_hkth.svg" alt="Resume" width="50">
           <a href="assets/documents/Emilio%20Torres%20Resume.pdf" target="_blank" download style="text-decoration: none">
-            <button type="button" class="btn btn-light mx-auto" style="margin: 15px">Download Resume</button>
+            <button type="button" class="btn btn-light mx-auto">Download Resume</button>
           </a>
         </div>
-        <div class="col-4">
-          <img src="assets/about/undraw_Mailbox_re_dvds.svg" alt="Mailbox" width="50">
+        <div class="col-lg-4 col-sm-12 mb-sm-3">
+          <img class="d-none d-lg-inline footer-img" src="assets/about/undraw_Mailbox_re_dvds.svg" alt="Mailbox" width="50">
           <a class="btn-align" href="mailto:me@etorresh.com" target="_blank">me@etorresh.com</a>
         </div>
       </div>

@@ -64,7 +64,9 @@ export class AboutComponent implements  OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
+    if (!(this.sidebarSubscription === undefined) || !this.sidebarSubscription.closed) {
     this.sidebarSubscription.unsubscribe();
+    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -75,7 +77,6 @@ export class AboutComponent implements  OnInit, OnDestroy{
     if (!(this.sidebarSubscription === undefined) && !this.animateFlexbox && !this.sidebarSubscription.closed) {
       this.sidebarSubscription.unsubscribe();
     }
-    console.log(this.sidebarSubscription);
     if (this.animateFlexbox && (this.sidebarSubscription === undefined || this.sidebarSubscription.closed)) {
       this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
         if (!this.firstRun) {

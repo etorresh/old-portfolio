@@ -3,6 +3,11 @@
   height: 90px;
 }
 
+.horizontal-line {
+  border-top: 8px solid #2472a3;
+  width: 390px;
+}
+
 .card {
   width: 320px;
   height: 421px;
@@ -13,10 +18,6 @@
   margin-top: 25px;
 }
 
-.other-cards {
-  margin-left: 25px;
-}
-
 .card-title {
   font-size: 16px;
   font-weight: bold;
@@ -24,6 +25,11 @@
 
 .card-text {
   font-size: 12px;
+}
+
+.footer-img {
+  width: 50px;
+  height: 46px;
 }
 
 .about-header {
@@ -36,16 +42,8 @@
   background-color: white;
 }
 
-.btn-align {
-  display: block;
-  margin: 21px 27px;
-  line-height: 1.42857143;
-  vertical-align: middle;
-}
-
 .btn-light {
-  margin: 15px;
-  display: block;
+  margin: 5px;
 }
 
 .align-text {
@@ -62,13 +60,9 @@
   .align-text {
     text-align: center;
   }
-
-  .disable-phone {
-    display: none;
-  }
 }
 
-@media only screen and (min-height: 940px) {
+@media only screen and (min-width: 1201px) {
   .card-row {
     margin-top: 75px;
   }
@@ -77,5 +71,31 @@
 @media only screen and (max-width: 1297px) {
   .last-card {
     margin-bottom: 165px;
+  }
+}
+
+@media only screen and (min-width: 953px) {
+  .other-cards {
+    margin-left: 25px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .btn-align {
+    display: block;
+    margin: 21px 27px;
+    line-height: 1.42857143;
+    vertical-align: middle;
+  }
+  .btn-light {
+    margin: 15px;
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .card {
+    margin-right: auto;
+    margin-left: auto;
   }
 }
