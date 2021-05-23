@@ -53,46 +53,44 @@ import {Subscription} from 'rxjs';
 })
 export class AboutComponent implements  OnInit, OnDestroy{
   constructor(public sidebarService: SidebarService) { }
-  public animateFlexbox: boolean;
   public animateFlexboxState = 'full';
+  private sidebarSubscription: Subscription = Subscription.EMPTY;
   private firstRun = true;
-  private innerWidth: number;
-  private sidebarSubscription: Subscription;
+  private subActive = false;
   ngOnInit() {
     this.onResize();
     this.firstRun = false;
   }
 
   ngOnDestroy() {
-    if (!(this.sidebarSubscription === undefined) || !this.sidebarSubscription.closed) {
     this.sidebarSubscription.unsubscribe();
-    }
   }
 
   @HostListener('window:resize', ['$event'])
   // tslint:disable-next-line:variable-name
   onResize(_event?) {
-    this.innerWidth = window.innerWidth;
-    this.animateFlexbox = (this.innerWidth <= 1297) && (this.innerWidth >= 1020);
-    if (!(this.sidebarSubscription === undefined) && !this.animateFlexbox && !this.sidebarSubscription.closed) {
-      this.sidebarSubscription.unsubscribe();
-    }
-    if (this.animateFlexbox && (this.sidebarSubscription === undefined || this.sidebarSubscription.closed)) {
-      this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
-        if (!this.firstRun) {
-          if (status) {
-            this.animateFlexboxState = 'empty';
-            setTimeout(() => {
-              this.animateFlexboxState = 'fullNoTran';
-            }, 240);
-          } else {
-            this.animateFlexboxState = 'emptyNoTran';
-            setTimeout(() => {
-              this.animateFlexboxState = 'full';
-            }, 10);
+    if (window.innerWidth <= 1297 && window.innerWidth >= 1020) {
+      if (!this.subActive) {
+        this.subActive = true;
+        this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
+          if (!this.firstRun) {
+            if (status) {
+              this.animateFlexboxState = 'empty';
+              setTimeout(() => {
+                this.animateFlexboxState = 'fullNoTran';
+              }, 240);
+            } else {
+              this.animateFlexboxState = 'emptyNoTran';
+              setTimeout(() => {
+                this.animateFlexboxState = 'full';
+              }, 10);
+            }
           }
-        }
-      });
+        });
+      }
+    } else {
+      this.sidebarSubscription.unsubscribe();
+      this.subActive = false;
     }
   }
 }
