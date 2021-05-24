@@ -66,7 +66,6 @@ export class AppComponent implements OnInit, OnDestroy{
     if (window.innerWidth <= 992) {
       this.mobile = true;
     }
-    console.log(this.mobile);
   }
 
   ngOnDestroy() {
