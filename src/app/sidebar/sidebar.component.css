@@ -30,3 +30,9 @@ a:hover {
   outline: none;
   width: 288px;
 }
+
+@media only screen and (max-width: 992px) {
+  .face-button {
+    width: 100vw;
+  }
+}

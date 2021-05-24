@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {faAlignLeft} from '@fortawesome/free-solid-svg-icons';
 import {animate, animateChild, group, query, state, style, transition, trigger} from '@angular/animations';
 import {SidebarService} from './sidebar.service';
@@ -58,14 +58,25 @@ export class AppComponent implements OnInit, OnDestroy{
   faAlignLeft = faAlignLeft;
   private sidebarSubscription: Subscription;
   private sidebarStatus: boolean;
+  public mobile = false;
   ngOnInit() {
     this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
       this.sidebarStatus = status;
     });
+    if (window.innerWidth <= 992) {
+      this.mobile = true;
+    }
+    console.log(this.mobile);
   }
 
   ngOnDestroy() {
     this.sidebarSubscription.unsubscribe();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  // tslint:disable-next-line:variable-name
+  onResize(_event?) {
+    this.mobile = window.innerWidth <= 992;
   }
 
   toggleSidebar() {
