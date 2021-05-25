@@ -3,6 +3,7 @@ import {faAlignLeft} from '@fortawesome/free-solid-svg-icons';
 import {animate, animateChild, group, query, state, style, transition, trigger} from '@angular/animations';
 import {SidebarService} from './sidebar.service';
 import {Subscription} from 'rxjs';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,8 @@ import {Subscription} from 'rxjs';
       marginLeft: '0px'
     })),
     state('close', style({
-      marginLeft: '-288px'
-    })),
+      marginLeft: '{{left_indent}}',
+    }), {params: {left_indent: 0}}),
     transition('open => close', [
       group([
         animate('0.5s'),
@@ -52,12 +53,13 @@ import {Subscription} from 'rxjs';
   ]
 })
 export class AppComponent implements OnInit, OnDestroy{
-  constructor(public sidebarService: SidebarService) {
+  constructor(public sidebarService: SidebarService, private router: Router) {
   }
   title = 'portfolio';
   faAlignLeft = faAlignLeft;
   private sidebarSubscription: Subscription;
   private sidebarStatus: boolean;
+  public amountToShiftSidebar = '-288px';
   public mobile = false;
   ngOnInit() {
     this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
@@ -65,6 +67,15 @@ export class AppComponent implements OnInit, OnDestroy{
     });
     if (window.innerWidth <= 992) {
       this.mobile = true;
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd && event.url !== '/') {
+          this.sidebarService.setActive(false);
+        }
+      });
+      this.amountToShiftSidebar = '-100vw';
+    }
+    else {
+      this.router.navigateByUrl('/about');
     }
   }
 

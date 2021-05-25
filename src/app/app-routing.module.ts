@@ -7,7 +7,6 @@ import {SkillsComponent} from './sidebar-content/skills/skills.component';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: window.screen.width > 992 ? '/about' : '', pathMatch: 'full'},
   {path: 'about', component: AboutComponent},
   {path: 'experience', component: ExperienceComponent},
   {path: 'projects', component: ProjectsComponent},
