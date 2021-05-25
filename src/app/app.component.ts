@@ -4,6 +4,7 @@ import {animate, animateChild, group, query, state, style, transition, trigger} 
 import {SidebarService} from './sidebar.service';
 import {Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -53,40 +54,46 @@ import {NavigationEnd, Router} from '@angular/router';
   ]
 })
 export class AppComponent implements OnInit, OnDestroy{
-  constructor(public sidebarService: SidebarService, private router: Router) {
+  constructor(public sidebarService: SidebarService, private router: Router, private location: Location) {
   }
   title = 'portfolio';
   faAlignLeft = faAlignLeft;
   private sidebarSubscription: Subscription;
+  private routeSubscription: Subscription = Subscription.EMPTY;
   private sidebarStatus: boolean;
-  public amountToShiftSidebar = '-288px';
-  public mobile = false;
+  public amountToShiftSidebar: string;
+  public mobile: boolean;
   ngOnInit() {
+    this.onResize();
     this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
       this.sidebarStatus = status;
     });
-    if (window.innerWidth <= 992) {
-      this.mobile = true;
-      this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd && event.url !== '/') {
-          this.sidebarService.setActive(false);
-        }
-      });
-      this.amountToShiftSidebar = '-100vw';
-    }
-    else {
-      this.router.navigateByUrl('/about');
-    }
-  }
-
-  ngOnDestroy() {
-    this.sidebarSubscription.unsubscribe();
+    this.routeSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && this.mobile && event.url !== '/') {
+        this.sidebarService.setActive(false);
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
   // tslint:disable-next-line:variable-name
   onResize(_event?) {
-    this.mobile = window.innerWidth <= 992;
+    if (window.innerWidth <= 992) {
+      this.mobile = true;
+      this.amountToShiftSidebar = '-100vw';
+    }
+    else {
+      this.mobile = false;
+      this.amountToShiftSidebar = '-288px';
+      if (this.location.path() === '') {
+        this.router.navigateByUrl('/about');
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    this.sidebarSubscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
   }
 
   toggleSidebar() {
