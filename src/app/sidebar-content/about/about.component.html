@@ -36,7 +36,7 @@
         </div>
       </div>
   </div>
-  <div class="fixed-bottom footer" [@openClose]="(this.sidebarService.getActive() | async) ? 'open' : 'close'">
+  <div class="fixed-bottom footer" [@openClose]="this.footerAnimation">
     <div class="container">
       <div class="row text-center mt-sm-3 mt-lg-4">
         <div class="col-lg-4 col-sm-12 d-none d-lg-inline">

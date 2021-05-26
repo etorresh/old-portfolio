@@ -1,5 +1,5 @@
 <div class="d-flex">
-  <div class="position-fixed fixed-top">
+  <div class="position-fixed fixed-top sidebar">
     <div [@openClose]="{value: (this.sidebarService.getActive() | async) ? 'open' : 'close', params: {left_indent: amountToShiftSidebar}}" >
       <app-sidebar></app-sidebar>
     </div>
@@ -9,10 +9,7 @@
       </button>
     </div>
   </div>
-  <div *ngIf="!mobile" class="flex-grow-1" [@openCloseContent]="(this.sidebarService.getActive() | async) ? 'open' : 'close'">
-    <router-outlet></router-outlet>
-  </div>
-  <div *ngIf="mobile" class="flex-grow-1">
+  <div class="flex-grow-1" [@openCloseContent]="this.sidebarAnimation">
     <router-outlet></router-outlet>
   </div>
 </div>

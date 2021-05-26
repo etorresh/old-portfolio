@@ -63,10 +63,18 @@ export class AppComponent implements OnInit, OnDestroy{
   private sidebarStatus: boolean;
   public amountToShiftSidebar: string;
   public mobile: boolean;
+  public sidebarAnimation: string;
   ngOnInit() {
     this.onResize();
     this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
       this.sidebarStatus = status;
+      console.log(status);
+      console.log(this.mobile);
+      if (this.sidebarStatus && !this.mobile) {
+        this.sidebarAnimation = 'open';
+      } else {
+        this.sidebarAnimation = 'close';
+      }
     });
     this.routeSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd && this.mobile && event.url !== '/') {
@@ -80,6 +88,7 @@ export class AppComponent implements OnInit, OnDestroy{
   onResize(_event?) {
     if (window.innerWidth <= 992) {
       this.mobile = true;
+      this.sidebarAnimation = 'close';
       this.amountToShiftSidebar = '-100vw';
     }
     else {

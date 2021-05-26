@@ -57,18 +57,30 @@ export class AboutComponent implements  OnInit, OnDestroy{
   private sidebarSubscription: Subscription = Subscription.EMPTY;
   private firstRun = true;
   private subActive = false;
+  public mobile: boolean;
+  public footerAnimation: string;
+  private footerSubscription: Subscription = Subscription.EMPTY;
   ngOnInit() {
     this.onResize();
     this.firstRun = false;
-  }
+    this.mobile = window.innerWidth <= 992;
+    this.footerSubscription = this.sidebarService.getActive().subscribe(status => {
+      if (status && !this.mobile) {
+        this.footerAnimation = 'open';
+      } else {
+        this.footerAnimation = 'close';
+      }});
+    }
 
   ngOnDestroy() {
     this.sidebarSubscription.unsubscribe();
+    this.footerSubscription.unsubscribe();
   }
 
   @HostListener('window:resize', ['$event'])
   // tslint:disable-next-line:variable-name
   onResize(_event?) {
+    this.mobile = window.innerWidth <= 992;
     if (window.innerWidth <= 1297 && window.innerWidth >= 1020) {
       if (!this.subActive) {
         this.subActive = true;
