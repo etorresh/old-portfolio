@@ -81,6 +81,9 @@ export class AboutComponent implements  OnInit, OnDestroy{
   // tslint:disable-next-line:variable-name
   onResize(_event?) {
     this.mobile = window.innerWidth <= 992;
+    if (this.mobile) {
+      this.footerAnimation = 'close';
+    }
     if (window.innerWidth <= 1297 && window.innerWidth >= 1020) {
       if (!this.subActive) {
         this.subActive = true;

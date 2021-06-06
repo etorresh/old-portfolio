@@ -8,7 +8,7 @@
       </ngb-carousel>
     </li>
     <div>
-      <li *ngFor="let option of options" ngbNavItem = "{{option}}">
+      <li *ngFor="let option of options" ngbNavItem = "{{option}}" (click)="goBackCheck(option)">
         <a ngbNavLink class="text-center" routerLinkActive="selected" [routerLink]="option | lowercase"><b>{{option}}</b></a>
       </li>
     </div>

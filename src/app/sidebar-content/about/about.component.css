@@ -5,7 +5,8 @@
 
 .horizontal-line {
   border-top: 8px solid #2472a3;
-  width: 390px;
+  max-width: 390px;
+  min-width: 300px;
 }
 
 .card {

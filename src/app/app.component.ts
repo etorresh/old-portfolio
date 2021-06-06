@@ -68,8 +68,6 @@ export class AppComponent implements OnInit, OnDestroy{
     this.onResize();
     this.sidebarSubscription = this.sidebarService.getActive().subscribe(status => {
       this.sidebarStatus = status;
-      console.log(status);
-      console.log(this.mobile);
       if (this.sidebarStatus && !this.mobile) {
         this.sidebarAnimation = 'open';
       } else {
@@ -93,6 +91,12 @@ export class AppComponent implements OnInit, OnDestroy{
     }
     else {
       this.mobile = false;
+      if (this.sidebarStatus) {
+        this.sidebarAnimation = 'open';
+      }
+      else {
+        this.sidebarAnimation = 'close';
+      }
       this.amountToShiftSidebar = '-288px';
       if (this.location.path() === '') {
         this.router.navigateByUrl('/about');
