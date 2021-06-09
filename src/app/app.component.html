@@ -1,12 +1,12 @@
 <div class="d-flex">
-  <div class="position-fixed fixed-top sidebar">
+  <div class="position-fixed fixed-top" style="width: 0">
     <div [@openClose]="{value: (this.sidebarService.getActive() | async) ? 'open' : 'close', params: {left_indent: amountToShiftSidebar}}" >
       <app-sidebar></app-sidebar>
     </div>
     <div>
-      <button type="button" class="btn shadow-none" (click)="toggleSidebar()" style="background-color: #2472a3">
-        <fa-icon [icon]="faAlignLeft"></fa-icon>
-      </button>
+    <button type="button" class="btn shadow-none" (click)="toggleSidebar()" style="background-color: #2472a3">
+      <fa-icon [icon]="faAlignLeft"></fa-icon>
+    </button>
     </div>
   </div>
   <div class="flex-grow-1" [@openCloseContent]="this.sidebarAnimation">

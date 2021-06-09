@@ -1,7 +1,7 @@
 import {Directive, ElementRef, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ParticlesService} from './sidebar-content/projects/particles.service';
-import {async} from 'rxjs/internal/scheduler/async';
 import {SidebarService} from './sidebar.service';
+import {Subscription} from 'rxjs';
 
 /*
   Variables to be used outside of directive scope
@@ -38,6 +38,8 @@ export class ParticlesDirective implements OnDestroy, OnInit {
   particlesList: Particle[] = [];
 
   animationFrame;
+  private sidebarSub = Subscription.EMPTY;
+  private sidebarStatus;
 
   constructor(
     public sidebarService: SidebarService,
@@ -57,6 +59,9 @@ export class ParticlesDirective implements OnDestroy, OnInit {
     this.setCanvasSize();
     this.initVariables();
     this.resetParticles();
+    this.sidebarSub = this.sidebarService.getActive().subscribe(status => {
+      this.sidebarStatus = status;
+    });
   }
 
 
@@ -87,14 +92,13 @@ export class ParticlesDirective implements OnDestroy, OnInit {
   updateParticles() {
     let rWidth;
     let rHeight;
-    if ((this.sidebarService.getActive() || async)) {
+    if (this.sidebarStatus) {
       rWidth = Math.round((canvas.width - 288) / 2);
     }
     else {
       rWidth = Math.round(canvas.width / 2);
     }
     rHeight = Math.round(canvas.height / 2);
-    quadTree.close();
     quadTree.close();
     ctx.fillStyle = this.particleHex;
     ctx.beginPath();
@@ -132,6 +136,7 @@ export class ParticlesDirective implements OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     cancelAnimationFrame(this.animationFrame);
+    this.sidebarSub.unsubscribe();
   }
 }
 
