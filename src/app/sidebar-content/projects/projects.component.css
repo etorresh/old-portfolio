@@ -54,3 +54,20 @@
 .whiteOut {
   background-color: rgba(255, 255, 255, 0);
 }
+
+.card-top {
+  padding-top: 30px;
+}
+
+.cards-height {
+  height: 100vh;
+}
+
+@media only screen and (max-width: 767px) {
+  .card-bot {
+    padding-bottom: 30px;
+  }
+  .cards-height {
+    height: 100%;
+  }
+}
